@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - 3333:3333
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: compasso
