@@ -10,6 +10,7 @@ class ClientRoutes extends Routes {
 
     router.get(`/${apiVersion}/${resourceName}`, ClientsController.index)
     router.post(`/${apiVersion}/${resourceName}`, ClientsController.store)
+    router.get(`/${apiVersion}/${resourceName}/:id`, ClientsController.show)
   }
 }
 

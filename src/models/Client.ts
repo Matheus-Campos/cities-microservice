@@ -1,5 +1,6 @@
 import { Schema, Document, model } from 'mongoose'
 import { differenceInYears } from 'date-fns'
+import { CityDocument } from './City'
 
 export enum Gender {
   Male = 1,
@@ -11,7 +12,7 @@ export interface Client {
   name: string,
   gender: Gender,
   birthDate: Date,
-  cityId: number
+  city: Schema.Types.ObjectId | CityDocument
 }
 
 export type ClientDocument = Document & Client
@@ -29,8 +30,9 @@ const ClientSchema = new Schema<Client>({
     type: Date,
     required: true
   },
-  cityId: {
+  city: {
     type: Schema.Types.ObjectId,
+    ref: 'City',
     required: true
   }
 },

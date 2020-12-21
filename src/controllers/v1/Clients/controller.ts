@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
+
 import ClientModel, { Client, ClientDocument } from '../../../models/Client'
+import { Errors, ResourceParam } from '../../controllers.types'
 
 import { ClientQuery } from './controller.params'
 
@@ -11,7 +13,7 @@ class ClientController {
       query.where('name', new RegExp(`.*${req.query.name}.*`, 'i'))
     }
 
-    const clients = await query.exec()
+    const clients = await query.populate('city').exec()
 
     return res.status(200).send(clients)
   }
@@ -20,6 +22,23 @@ class ClientController {
     const client = await ClientModel.create(req.body)
     res.setHeader('Location', `/v1/clients/${client.id}`)
     return res.status(201).send(client)
+  }
+
+  async show (req: Request<ResourceParam>, res: Response<ClientDocument | Errors>) {
+    const client = await ClientModel
+      .findById(req.params.id)
+      .populate('city')
+      .exec()
+
+    if (!client) {
+      return res.status(404).send({
+        errors: [{
+          message: 'Client could not be found'
+        }]
+      })
+    }
+
+    return res.status(200).send(client)
   }
 }
 
