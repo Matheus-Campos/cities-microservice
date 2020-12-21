@@ -16,11 +16,13 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.8"
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.9",
     "@types/mongoose": "^5.10.3",
+    "@types/morgan": "^1.9.2",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^7.16.0",
