@@ -19,7 +19,8 @@ class ClientController {
   }
 
   async store (req: Request<any, any, Client>, res: Response<ClientDocument>) {
-    const client = await ClientModel.create(req.body)
+    let client = await ClientModel.create(req.body)
+    client = await client.populate('city').execPopulate()
     res.setHeader('Location', `/v1/clients/${client.id}`)
     return res.status(201).send(client)
   }
@@ -39,6 +40,22 @@ class ClientController {
     }
 
     return res.status(200).send(client)
+  }
+
+  async destroy (req: Request<ResourceParam>, res: Response<ClientDocument | Errors>) {
+    const client = await ClientModel.findById(req.params.id)
+
+    if (!client) {
+      return res.status(404).send({
+        errors: [{
+          message: 'Client could not be found'
+        }]
+      })
+    }
+
+    await client.delete()
+
+    return res.status(204).send()
   }
 }
 
