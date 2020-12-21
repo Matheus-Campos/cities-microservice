@@ -11,6 +11,7 @@ services:
       - .env
     depends_on:
       - db
+    command: npm run dev
 
   db:
     image: mongo:latest
