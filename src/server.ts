@@ -1,6 +1,7 @@
 import '../config/env'
 
 import express from 'express'
+import morgan from 'morgan'
 import { connect } from 'mongoose'
 
 import routes from './routes'
@@ -16,6 +17,7 @@ connect(DATABASE_URL || '', {
 const app = express()
 
 app.use(express.json())
+app.use(morgan('dev'))
 
 app.use(routes)
 
