@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import ClientModel, { Client, ClientDocument } from '../../../models/Client'
 import { Errors, ResourceParam } from '../../controllers.types'
 
-import { ClientQuery } from './controller.params'
+import { ClientQuery, ClientUpdateBody } from './controller.params'
 
 class ClientController {
   async index (req: Request<any, any, null, ClientQuery>, res: Response<ClientDocument[]>) {
@@ -38,6 +38,28 @@ class ClientController {
         }]
       })
     }
+
+    return res.status(200).send(client)
+  }
+
+  async update (req: Request<ResourceParam, any, ClientUpdateBody>, res: Response<ClientDocument | Errors>) {
+    const client = await ClientModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name
+      },
+      { new: true }
+    )
+
+    if (!client) {
+      return res.status(404).send({
+        errors: [{
+          message: 'Client could not be found'
+        }]
+      })
+    }
+
+    await client.populate('city').execPopulate()
 
     return res.status(200).send(client)
   }
