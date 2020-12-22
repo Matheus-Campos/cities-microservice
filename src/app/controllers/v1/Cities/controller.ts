@@ -22,7 +22,6 @@ class CitiesController {
 
   async store (req: Request<any, any, City>, res: Response<CityDocument>) {
     const city = await CityModel.create(req.body)
-    res.setHeader('Location', `/v1/cities/${city.id}`)
     return res.status(201).send(city)
   }
 }
