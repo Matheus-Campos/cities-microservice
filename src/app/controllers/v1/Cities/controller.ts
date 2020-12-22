@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 
 import CityModel, { City, CityDocument } from '../../../models/City'
+import { CitiesResponse } from './controller.responses'
 
 class CitiesController {
-  async index (req: Request<any, any, null, City>, res: Response<CityDocument[]>) {
+  async index (req: Request<any, any, null, City>, res: Response<CitiesResponse>) {
     const query = CityModel.find()
 
     if (req.query.name) {
-      query.where('name', `/${req.query.name}/`)
+      query.where('name', new RegExp(`.*${req.query.name}.*`, 'i'))
     }
 
     if (req.query.state) {
@@ -16,7 +17,7 @@ class CitiesController {
 
     const cities = await query.exec()
 
-    return res.status(200).send(cities)
+    return res.status(200).send({ cities })
   }
 
   async store (req: Request<any, any, City>, res: Response<CityDocument>) {
