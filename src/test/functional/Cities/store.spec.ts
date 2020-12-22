@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 import supertest from 'supertest'
 import app from '../../../app/server'
 import CityModel, { City } from '../../../app/models/City'
