@@ -8,7 +8,7 @@ afterAll(async () => {
   await CityModel.deleteMany({})
 })
 
-describe('Functional - Cities store', () => {
+describe('Functional - Store City', () => {
   it('Should register a city', async () => {
     const city: City = {
       name: 'Natal',
