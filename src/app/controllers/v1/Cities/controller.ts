@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 
 import CityModel, { City, CityDocument } from '../../../models/City'
-import { CitiesResponse } from './controller.responses'
+import { CitiesIndexResponse } from './controller.responses'
 
 class CitiesController {
-  async index (req: Request<any, any, null, City>, res: Response<CitiesResponse>) {
+  async index (req: Request<any, any, null, City>, res: Response<CitiesIndexResponse>) {
     const query = CityModel.find()
 
     if (req.query.name) {

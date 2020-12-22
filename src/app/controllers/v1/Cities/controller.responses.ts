@@ -1,5 +1,5 @@
 import { CityDocument } from '../../../models/City'
 
-export interface CitiesResponse {
+export interface CitiesIndexResponse {
   cities: CityDocument[]
 }

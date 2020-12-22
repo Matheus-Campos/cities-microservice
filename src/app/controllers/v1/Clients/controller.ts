@@ -4,9 +4,10 @@ import ClientModel, { Client, ClientDocument } from '../../../models/Client'
 import { Errors, ResourceParam } from '../../controllers.types'
 
 import { ClientQuery, ClientUpdateBody } from './controller.params'
+import { ClientsIndexResponse } from './controller.responses'
 
 class ClientController {
-  async index (req: Request<any, any, null, ClientQuery>, res: Response<ClientDocument[]>) {
+  async index (req: Request<any, any, null, ClientQuery>, res: Response<ClientsIndexResponse>) {
     const query = ClientModel.find()
 
     if (req.query.name) {
@@ -15,7 +16,7 @@ class ClientController {
 
     const clients = await query.populate('city').exec()
 
-    return res.status(200).send(clients)
+    return res.status(200).send({ clients })
   }
 
   async store (req: Request<any, any, Client>, res: Response<ClientDocument>) {
