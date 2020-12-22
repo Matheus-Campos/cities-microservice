@@ -12,7 +12,8 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'plugin:jest/recommended'
   ],
   rules: {}
 }
