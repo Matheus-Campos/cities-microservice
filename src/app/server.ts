@@ -6,9 +6,13 @@ import { connect } from 'mongoose'
 
 import routes from './routes'
 
-const { PORT, DATABASE_URL } = process.env
+const { NODE_ENV, DATABASE_URL, TEST_DATABASE_URL } = process.env
 
-connect(DATABASE_URL || '', {
+const databaseConnectionUrl = NODE_ENV === 'test'
+  ? TEST_DATABASE_URL
+  : DATABASE_URL
+
+connect(databaseConnectionUrl || '', {
   useFindAndModify: true,
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -21,6 +25,4 @@ app.use(morgan('dev'))
 
 app.use(routes)
 
-const serverPort = PORT || 3333
-
-app.listen(serverPort, () => console.log(`Listing on port ${serverPort}`))
+export default app
